@@ -1,0 +1,31 @@
+name: Verify creative site examples
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  release-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check reproducibility, routes and media credits
+        run: python scripts/check.py
+      - name: Exercise the release gates
+        run: python scripts/test_checks.py
+      - name: Exercise the project toolkit and evaluate the flagship route map
+        run: |
+          python scripts/test_project.py
+          python scripts/project.py --project examples/weather-project check --site weather
+      - name: Install browser test runner
+        run: python -m pip install -r scripts/browser-requirements.txt
+      - name: Install matching Chromium and its system libraries
+        run: python -m playwright install --with-deps chromium
+      - name: Exercise real pages and interaction states
+        run: python scripts/check_browser.py
+      - name: Register and review a sixth style in a disposable fresh copy
+        run: python scripts/test_contribution.py
+      - name: Verify the transferable site runner on two projects
+        run: python scripts/test_visit_project.py

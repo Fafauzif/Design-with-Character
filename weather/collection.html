@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The collection · Weather Cabinet</title><link rel="stylesheet" href="assets/cabinet.css">
+<script defer src="assets/catalogue.js"></script><script defer src="assets/cabinet.js"></script></head>
+<body data-page="collection" data-base="" >
+<a class="skip" href="#main">Skip to content</a>
+<header class="mast"><a class="brand" href="index.html" aria-label="Weather Cabinet entrance"><span class="mark" aria-hidden="true">W</span> Weather Cabinet</a>
+<nav aria-label="Cabinet"><a href="collection.html" aria-current="page">Collection</a><a href="compare.html">Compare</a><a href="notes.html">Field notes</a></nav></header>
+<main id="main"><section class="catalog wrap">
+    <div class="catalog-heading"><div><a class="back" href="index.html">← Cabinet entrance</a><h1>The collection</h1></div>
+    <p>Look up an instrument by name, material, or the weather it records.</p></div>
+    <form class="lookup" id="lookup" role="search"><label for="search">Find an instrument<input id="search" type="search" name="q" placeholder="Try glass or frost" autocomplete="off"></label>
+    <label for="family">Weather family<select id="family" name="family"><option value="">All weather</option><option>Air</option><option>Light</option><option>Water</option></select></label></form>
+    <p class="count" id="result-count" role="status">6 instruments</p>
+    <ol class="index-list"><li data-search="rain catcher water rainfall glass and brass height of the waterline an open yard after a shower" data-family="Water">
+        <a class="index-entry" aria-label="Rain catcher" href="objects/rain-catcher.html"><div class="index-plate" style="--tint:#c6d5ca"><img src="../styles/specimen-cabinet/rain.webp" alt="" width="540" height="540"></div>
+        <span><small>Rainfall</small><strong>Rain catcher</strong><span class="index-material">Glass and brass</span></span><b class="medium-arrow" aria-hidden="true">→</b></a></li><li data-search="pocket wind counter air wind brass and walnut turns of the cups above a garden wall during a steady breeze" data-family="Air">
+        <a class="index-entry" aria-label="Pocket wind counter" href="objects/pocket-wind-counter.html"><div class="index-plate" style="--tint:#e1c6a4"><img src="../styles/specimen-cabinet/wind.webp" alt="" width="540" height="540"></div>
+        <span><small>Wind</small><strong>Pocket wind counter</strong><span class="index-material">Brass and walnut</span></span><b class="medium-arrow" aria-hidden="true">→</b></a></li><li data-search="folding sundial light sunlight cast bronze position of a shadow a sunlit step in direct sunlight" data-family="Light">
+        <a class="index-entry" aria-label="Folding sundial" href="objects/folding-sundial.html"><div class="index-plate" style="--tint:#e8cd81"><img src="../styles/specimen-cabinet/sun.webp" alt="" width="540" height="540"></div>
+        <span><small>Sunlight</small><strong>Folding sundial</strong><span class="index-material">Cast bronze</span></span><b class="medium-arrow" aria-hidden="true">→</b></a></li><li data-search="dew mirror water dew silver plate and walnut beads on the polished face a sheltered sill before sunrise" data-family="Water">
+        <a class="index-entry" aria-label="Dew mirror" href="objects/dew-mirror.html"><div class="index-plate" style="--tint:#cbd4df"><img src="assets/dew-mirror.webp" alt="" width="540" height="540"></div>
+        <span><small>Dew</small><strong>Dew mirror</strong><span class="index-material">Silver plate and walnut</span></span><b class="medium-arrow" aria-hidden="true">→</b></a></li><li data-search="cloud window air cloud drift enamel, brass and wire cloud crossing a wire a clearing with a landmark as broken cloud passes" data-family="Air">
+        <a class="index-entry" aria-label="Cloud window" href="objects/cloud-window.html"><div class="index-plate" style="--tint:#c2d5d9"><img src="assets/cloud-window.webp" alt="" width="540" height="540"></div>
+        <span><small>Cloud drift</small><strong>Cloud window</strong><span class="index-material">Enamel, brass and wire</span></span><b class="medium-arrow" aria-hidden="true">→</b></a></li><li data-search="frost comb water frost steel and walnut crystals on the notches a bare garden ledge on a frosty morning" data-family="Water">
+        <a class="index-entry" aria-label="Frost comb" href="objects/frost-comb.html"><div class="index-plate" style="--tint:#d8d1df"><img src="assets/frost-comb.webp" alt="" width="540" height="540"></div>
+        <span><small>Frost</small><strong>Frost comb</strong><span class="index-material">Steel and walnut</span></span><b class="medium-arrow" aria-hidden="true">→</b></a></li></ol><div class="empty" id="empty" hidden><h2>No instruments found</h2><p>Try a material such as brass, or look across all weather families.</p><button id="clear-search" type="button">Clear search</button></div>
+    <noscript><p>All six instruments are listed above. Search and filtering require JavaScript.</p></noscript></section></main>
+
+</body></html>

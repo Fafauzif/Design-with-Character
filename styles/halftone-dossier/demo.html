@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>The Stolen Seat · Halftone Dossier</title>
+<style>
+:root {
+  --ink: #332036;
+  --plum: #52284d;
+  --paper: #f3e8d1;
+  --sheet: #fbf0d9;
+  --field: #2b1b2c;
+  --pink: #a61455;
+  --bright: #ff77ae;
+  --faint: #7d526a;
+  --display: Rockwell, "DejaVu Serif", Georgia, serif;
+  --body: Arial, "DejaVu Sans", sans-serif;
+  --mono: "Courier New", monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  min-width: 0;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background: radial-gradient(circle at 50% 0%, #472e45, transparent 78%), var(--field);
+  font: 1rem/1.56 var(--body);
+}
+button { color: inherit; font: inherit; cursor: pointer; }
+button:disabled { cursor: default; }
+:focus-visible { outline: 3px solid var(--pink); outline-offset: 5px; }
+h1, p { margin: 0; }
+[hidden] { display: none !important; }
+main { overflow-x: clip; max-width: 79rem; margin: 0 auto; padding: clamp(1.75rem, 6.1vw, 6rem) clamp(1rem, 5.4vw, 5.2rem); }
+.cover {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1.23fr) minmax(0, .77fr);
+  align-items: center;
+  min-height: clamp(31rem, 56vw, 40rem);
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0 9% 0 0;
+  background: var(--paper);
+  clip-path: polygon(0 0, 34% 0, 37% 2.7rem, 100% 2.7rem, 100% 100%, 0 100%);
+}
+.cover::after {
+  content: "";
+  position: absolute;
+  z-index: -3;
+  inset: 3.9rem 6.2% .02rem .6rem;
+  background: #cbb49b;
+  transform: rotate(1.45deg);
+  transform-origin: 50% 36%;
+}
+.cover-inner { align-self: center; padding: 3.3rem 0 3.5rem clamp(1.4rem, 5vw, 4.75rem); z-index: 1; }
+.serial { color: var(--pink); font: 700 clamp(.83rem, 1.35vw, 1.05rem)/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.cover h1 {
+  width: auto;
+  margin: 1rem 0 1.45rem -.045em;
+  font: 900 clamp(2.4rem, 5.65vw, 5.4rem)/.91 var(--display);
+  letter-spacing: -.085em;
+  text-transform: uppercase;
+  text-shadow: .028em .034em 0 #d893ad;
+}
+.cover h1 span { display: block; }
+.cover-copy { max-width: 25ch; color: #593b50; font-size: clamp(1rem, 1.62vw, 1.22rem); line-height: 1.46; }
+.open-button, .file-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.15rem;
+  min-height: 3.2rem;
+  margin-top: 1.55rem;
+  padding: .65rem 1.02rem;
+  border: 0;
+  border-bottom: 3px solid #743c67;
+  background: var(--plum);
+  color: #fff4e1;
+  font: 700 clamp(.9rem, 1.4vw, 1.05rem)/1.2 var(--body);
+  box-shadow: .19rem .19rem 0 #d893ac;
+  transition: transform 140ms ease-out, background-color 140ms ease-out, box-shadow 140ms ease-out;
+}
+.open-button::after {
+  content: "";
+  width: 1.35rem;
+  height: .68rem;
+  flex: none;
+  background: currentColor;
+  clip-path: polygon(0 42%, 73% 42%, 64% 13%, 70% 0, 100% 50%, 70% 100%, 64% 87%, 73% 58%, 0 58%);
+}
+.open-button:hover, .file-button:enabled:hover { background: #713865; transform: translate(-2px,-2px); box-shadow: .3rem .3rem 0 #d893ac; }
+.open-button:active, .file-button:enabled:active { transform: translate(2px,2px); box-shadow: none; }
+.cover-art {
+  position: relative;
+  pointer-events: none;
+  display: grid;
+  align-items: center;
+  place-items: center;
+  margin: .8rem -.8rem 0 -4rem;
+  align-self: stretch;
+  isolation: isolate;
+}
+.cover-art::before, .cover-art::after {
+  content: "";
+  position: absolute;
+  inset: 7% -1% 3% -5%;
+  z-index: -1;
+  transform: rotate(-12deg);
+  mask-image: radial-gradient(ellipse at 49% 56%, #000 0%, #000 21%, #000c 37%, #0003 59%, transparent 72%);
+}
+.cover-art::before { background: radial-gradient(circle, #52284d 1.38px, transparent 1.62px) 0 0 / 5px 5px; }
+.cover-art::after { background: radial-gradient(circle, #db3477 1.1px, transparent 1.4px) 1px 0 / 5px 5px; opacity: .55; }
+.cover-art img { display: block; width: min(100%, 32rem); height: auto; max-height: 88%; object-fit: contain; transform: rotate(-4.4deg); margin-top: 2rem; }
+.cover.is-returning { animation: settle .31s cubic-bezier(.2,.7,.3,1) both; }
+.case {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 50rem);
+  margin-inline: auto;
+  padding: clamp(1.3rem, 5.8vw, 4.2rem);
+  background: var(--sheet);
+  animation: pullout .44s cubic-bezier(.2,.7,.3,1) both;
+}
+.case::before {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  inset: .8rem -.32rem -.63rem .32rem;
+  background: #cbb49b;
+  clip-path: polygon(calc(100% - .32rem) 0, 100% 0, 100% 100%, 0 100%, 0 calc(100% - .63rem), calc(100% - .32rem) calc(100% - .63rem));
+  pointer-events: none;
+}
+.case h1 {
+  margin: .45rem 0 1.2rem;
+  font: 900 clamp(2.15rem,6vw,4.3rem)/1 var(--display);
+  letter-spacing: -.067em;
+}
+.case h1:focus { outline: none; }
+.case-copy { max-width: 48ch; color: #593b50; font-size: 1.06rem; }
+.case-print {
+  position: absolute; z-index: -1; pointer-events: none;
+  top: 9rem; right: 2rem; width: 9.4rem; height: 9.4rem;
+  background: var(--cat-art) center 25% / 120% auto no-repeat;
+  transform: rotate(8deg);
+  mask-image: radial-gradient(ellipse at 50% 45%, #000 32%, #000d 49%, transparent 69%);
+}
+.case-print::after {
+  position: absolute; inset: 0; content: "";
+  background: radial-gradient(circle, #52284d 1px, transparent 1.2px) 0 0 / 4px 4px;
+  opacity: .28; z-index: -1;
+}
+.case-meta { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem 1rem; }
+.close-button {
+  min-height: 2.75rem;
+  padding: .15rem .2rem;
+  border: 0;
+  background: none;
+  color: var(--plum);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: .25em;
+}
+.close-button:hover { color: var(--pink); }
+.notes { margin: 1.75rem 0 .7rem; list-style: none; padding: 0; }
+.notes li { margin-block: .32rem; }
+.note { width: min(100%, 37rem); }
+summary {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: .6rem;
+  min-height: 2.85rem;
+  width: max-content;
+  max-width: 100%;
+  padding: .45rem .7rem .45rem .4rem;
+  color: var(--plum);
+  cursor: pointer;
+  font-weight: 750;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary::before {
+  content: "+"; flex: none; display: grid; place-items: center; width: 1.3rem; height: 1.3rem;
+  color: var(--pink); font: 800 1.05rem/1 var(--mono);
+  background: #f0d8cf;
+  clip-path: polygon(0 0, 75% 0, 100% 25%, 100% 100%, 0 100%);
+}
+.note[open] summary::before { content: "−"; }
+summary:hover { text-decoration: underline; text-underline-offset: .21em; }
+.note p {
+  max-width: 53ch;
+  margin-left: 2.3rem;
+  padding: .52rem .65rem .62rem;
+  background: #f2e4c8;
+}
+.resolution { display: flex; flex-wrap: wrap; align-items: center; min-height: 4rem; gap: .25rem 1.15rem; margin-top: .9rem; }
+.file-button { margin: 0; }
+.file-button:disabled { border: 1px dashed #846775; color: #664f5e; background: transparent; box-shadow: none; }
+.help { color: #674754; font-size: .9rem; }
+.filed-result { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.05rem; color: var(--plum); }
+.stamp {
+  display: inline-block;
+  padding: .15rem .5rem;
+  border: 2px solid var(--pink);
+  color: var(--pink);
+  font: 900 1.06rem/1.2 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  transform: rotate(-5deg);
+}
+.filed-result.is-new .stamp { animation: press .26s cubic-bezier(.22,.7,.45,1.25) both; }
+@keyframes press { from { opacity: .24; transform: translateY(-.45rem) scale(1.38) rotate(-11deg); } }
+@keyframes pullout { from { opacity: .45; transform: translateY(1.2rem) rotate(-1.25deg); } }
+@keyframes settle { from { opacity: .72; transform: translateY(.5rem); } }
+@media (max-width: 920px) {
+  .cover-inner { padding-left: clamp(1.3rem, 4.2vw, 3rem); }
+  .cover-art { margin-left: -2.6rem; }
+}
+@media (max-width: 690px) {
+  main { padding: 1.15rem 1.08rem 1.6rem; }
+  .cover { grid-template-columns: minmax(0, 1fr); align-items: start; min-height: 0; }
+  .cover::before { inset: 0 0 .85rem 0; clip-path: polygon(0 0, 43% 0, 48% 1.5rem, 100% 1.5rem, 100% 100%, 0 100%); }
+  .cover::after { inset: 2.3rem .6rem .3rem .42rem; transform: rotate(1.05deg); }
+  .cover-inner { padding: 2rem clamp(1.2rem, 5vw, 2.55rem) 0; }
+  .cover h1 { min-width: 0; margin: .7rem 0 .75rem -.04em; font-size: clamp(1.95rem, 8.65vw, 4.03rem); }
+  .cover-copy { max-width: 30ch; }
+  .open-button { margin-top: 1rem; }
+  .cover-art { min-height: 0; height: clamp(13rem, 54vw, 19rem); margin: -.2rem -.2rem 0; }
+  .cover-art img { width: auto; height: 97%; max-width: 93%; max-height: 97%; margin: 0; }
+  .cover-art::before, .cover-art::after { inset: -10% 0 2%; }
+  .case { padding: 1.25rem; }
+  .case h1 { margin-top: .2rem; }
+  .case-print { top: .9rem; left: calc(50% - 1.4rem); right: auto; width: 2.8rem; height: 2.8rem; }
+}
+@media (min-width: 691px) and (max-width: 864px) {
+  .case-print { width: 6rem; height: 6rem; right: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<main>
+  <section class="cover" id="cover" aria-labelledby="cover-title">
+    <div class="cover-inner">
+      <p class="serial">Case file 007</p>
+      <h1 id="cover-title"><span>The stolen</span> <span>seat.</span></h1>
+      <p class="cover-copy">A desk chair went missing. Pip was in it when we arrived.</p>
+      <button class="open-button" type="button" id="open-file" aria-controls="case-file">Open case file</button>
+    </div>
+    <div class="cover-art" aria-hidden="true"><img alt="" width="760" height="760" src="%%ASSET:art.webp%%"></div>
+  </section>
+
+  <article class="case" id="case-file" aria-labelledby="case-title" hidden>
+    <div class="case-meta">
+      <p class="serial">Case file 007</p>
+      <button class="close-button" id="close-file" type="button">Close file</button>
+    </div>
+    <h1 id="case-title" tabindex="-1">The stolen seat.</h1>
+    <div class="case-print" aria-hidden="true"></div>
+    <p class="case-copy">The chair squeaked at 10:12. By the time we crossed the room, Pip had tucked all four paws under herself. <span id="filing-instruction">Open the evidence notes to file the report.</span></p>
+    <ul class="notes" aria-label="Evidence">
+      <li><details class="note"><summary>The witness</summary><p>“I got up to find a pencil. When I came back, she’d already turned her back on me.”</p></details></li>
+      <li><details class="note"><summary>The cushion</summary><p>One dent, four lavender hairs and a tail-shaped mark in the dust.</p></details></li>
+      <li><details class="note"><summary>The defense</summary><p>Pip shut both eyes. The other chair, an arm’s length away, remained empty.</p></details></li>
+    </ul>
+    <div class="resolution">
+      <button class="file-button" id="file-report" type="button" aria-describedby="filing-help" disabled>File report</button>
+      <p class="help" id="filing-help" aria-live="polite">0 of 3 notes opened.</p>
+      <p class="filed-result" id="result" tabindex="-1" hidden><strong class="stamp">Filed</strong><span>Pip can keep the chair until lunch.</span></p>
+    </div>
+  </article>
+</main>
+<script>
+(() => {
+  const cover = document.getElementById("cover");
+  const file = document.getElementById("case-file");
+  const title = document.getElementById("case-title");
+  const open = document.getElementById("open-file");
+  const close = document.getElementById("close-file");
+  const commit = document.getElementById("file-report");
+  const help = document.getElementById("filing-help");
+  const instruction = document.getElementById("filing-instruction");
+  const result = document.getElementById("result");
+  const notes = [...file.querySelectorAll("details")];
+  const openedNotes = new Set();
+  const portraitSource = cover.querySelector(".cover-art img").src;
+  file.style.setProperty("--cat-art", `url("${portraitSource}")`);
+  const storageKey = "dossier-case-007-filed";
+  let filed = false;
+  try { filed = localStorage.getItem(storageKey) === "yes"; } catch (_) {}
+
+  function update() {
+    commit.disabled = openedNotes.size < notes.length || filed;
+    commit.hidden = filed;
+    help.hidden = filed;
+    instruction.hidden = filed;
+    if (!filed) {
+      const count = `${openedNotes.size} of ${notes.length} notes opened.`;
+      if (help.textContent !== count) help.textContent = count;
+    }
+    result.hidden = !filed;
+  }
+
+  open.addEventListener("click", () => {
+    cover.hidden = true;
+    file.hidden = false;
+    title.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  });
+
+  function closeFile() {
+    file.hidden = true;
+    cover.hidden = false;
+    cover.classList.add("is-returning");
+    open.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  }
+
+  close.addEventListener("click", closeFile);
+  file.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || event.defaultPrevented) return;
+    event.preventDefault();
+    closeFile();
+  });
+
+  for (const note of notes) {
+    note.addEventListener("toggle", () => {
+      if (note.open) openedNotes.add(note);
+      update();
+    });
+  }
+
+  commit.addEventListener("click", () => {
+    if (commit.disabled || filed) return;
+    filed = true;
+    try { localStorage.setItem(storageKey, "yes"); } catch (_) {}
+    update();
+    result.classList.add("is-new");
+    result.focus();
+  });
+
+  update();
+})();
+</script>
+</body>
+</html>

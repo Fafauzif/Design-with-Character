@@ -1,0 +1,22 @@
+{
+  "halftone-dossier": {
+    "opening": "Pip has claimed the chair. Her portrait sits on the cover of the case file.",
+    "changed": "All three pieces of evidence have been read and the report has been filed."
+  },
+  "botanical-letterpress": {
+    "opening": "A pressed cosmos lies on the table. A cobalt tab holds the note closed.",
+    "changed": "The folio opens to the field note about where the flower was found."
+  },
+  "specimen-cabinet": {
+    "opening": "Three drawer pulls separate instruments for rain, wind and sun.",
+    "changed": "The rain drawer is open. Its brass-footed gauge has been kept in field notes."
+  },
+  "arcade-workshop": {
+    "opening": "The drum machine is stopped with the Bounce pattern on the pads.",
+    "changed": "Night bus is playing. A lit step marks the beat above the drum pads."
+  },
+  "pixel-study-room": {
+    "opening": "Mallow waits in a moonlit study with a fresh timer.",
+    "changed": "A five-minute session is underway. The desk lamp is lit."
+  }
+}

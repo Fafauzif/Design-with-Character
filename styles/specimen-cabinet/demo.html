@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#efe9d9">
+<title>The Weather Cabinet · Specimen Cabinet</title>
+<style>
+:root{
+  color-scheme:light;
+  --wall:#efe9d9;
+  --paper:#fff8e8;
+  --ink:#2d2420;
+  --muted:#635248;
+  --wine:#532a32;
+  --deep-wine:#30161d;
+  --brass:#be935f;
+  --craft:#b33526;
+  font-family:system-ui,-apple-system,sans-serif;
+  color:var(--ink);
+  background:var(--wall);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{min-width:0}
+body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 68% 21%,#f8f3e7,transparent 72%),var(--wall)}
+button,summary{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,summary:focus-visible{outline:3px solid #166469;outline-offset:3px}
+h1,h2,p{margin:0}
+[hidden]{display:none!important}
+.only-reader{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+main{
+  width:min(1160px,calc(100% - 96px));
+  min-height:100svh;
+  margin-inline:auto;
+  padding:clamp(60px,13vh,135px) 0 64px;
+  display:grid;
+  grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);
+  align-items:start;
+  gap:clamp(45px,8vw,110px);
+}
+.intro{padding-top:clamp(20px,4vw,65px)}
+h1{
+  max-width:9ch;
+  font:normal clamp(51px,7vw,106px)/.84 Georgia,serif;
+  letter-spacing:-.078em;
+  text-wrap:balance;
+}
+.lede{
+  max-width:28ch;
+  margin-top:clamp(20px,4vw,36px);
+  color:var(--muted);
+  font-size:clamp(16px,1.65vw,20px);
+  line-height:1.55;
+}
+.field-notes{max-width:310px;margin-top:32px}
+.field-notes summary{min-height:44px;display:flex;gap:9px;align-items:center;font-size:14px;font-weight:750;list-style:none}
+.field-notes summary::-webkit-details-marker,.drawer summary::-webkit-details-marker{display:none}
+.field-notes summary::before{content:"+";font-size:18px;color:#87271f}
+.field-notes[open] summary::before{content:"−"}
+.field-notes > p{max-width:27ch;color:var(--muted);font-size:14px;line-height:1.5}
+.field-notes ul{margin:0;padding:0;list-style:none}
+.field-notes button{min-height:44px;max-width:100%;overflow-wrap:anywhere;background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;color:#166065;text-align:left}
+.cabinet{
+  isolation:isolate;
+  position:relative;
+  align-self:start;
+  display:grid;
+  gap:8px;
+  padding:clamp(12px,2vw,24px);
+  border-radius:4px 4px 2px 2px;
+  border:1px solid #2b1519;
+  background:
+    repeating-linear-gradient(2deg,#180c0f12 0 1px,transparent 1px 6px),
+    linear-gradient(#5b3333,#3b2023 75%);
+  box-shadow:
+    inset 2px 2px 0 #bc86634d,
+    inset -3px -3px 0 #1d1016b0,
+    3px 7px 0 #28191b,
+    8px 14px 0 #4d3329,
+    19px 29px 31px #341b182e;
+}
+.cabinet::before{
+  content:"";
+  position:absolute;z-index:-1;
+  inset:9px;
+  border-radius:1px;background:#241017;
+  box-shadow:inset 1px 2px 8px #0e060b;
+}
+.cabinet::after{
+  content:"";
+  position:absolute;z-index:-2;
+  width:90%;height:25px;left:5%;bottom:-16px;
+  background:#4a2c24;border-radius:0 0 4px 4px;
+}
+.drawer{position:relative;min-width:0}
+.drawer summary{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:clamp(11px,2vw,23px);
+  min-height:clamp(90px,12.1vw,133px);
+  position:relative;
+  z-index:1;
+  list-style:none;
+  padding:clamp(13px,2vw,25px);
+  border:1px solid #12090d;
+  border-radius:2px;
+  color:#fff3db;
+  background:
+    repeating-linear-gradient(0deg,#13060b10 0 1px,transparent 1px 4px),
+    linear-gradient(180deg,#633940,#49242d 80%,#401e28);
+  box-shadow:
+    inset 1px 1px 0 #b7867c80,
+    inset -2px -4px 0 #361c24bd,
+    0 4px 5px #12090d82;
+}
+.drawer summary:focus-visible{outline-color:#ffe49c;outline-offset:-4px}
+.drawer summary:hover,.drawer[open] summary{background-color:#6f3a45;background-blend-mode:normal,screen}
+.drawer-id{
+  display:grid;place-items:center;
+  min-width:34px;min-height:34px;
+  border:1px solid #c8956799;
+  border-radius:50%;
+  color:#f9e4be;
+  font-size:12px;
+  font-family:ui-monospace,monospace;
+}
+.drawer-name{font:normal clamp(29px,4.4vw,58px)/.88 Georgia,serif;letter-spacing:-.065em;overflow-wrap:anywhere}
+.handle{
+  width:clamp(40px,7vw,96px);
+  height:clamp(17px,2.6vw,31px);
+  align-self:center;
+  border:1px solid #170c0c;
+  border-top:3px solid #d6b687;
+  border-radius:3px 3px 8px 8px;
+  background:linear-gradient(#a97d47 0 31%,#3b2520 32% 50%,#785136 57%,#c69a58 68%,#876342);
+  box-shadow:0 4px 5px #1f0d15,0 0 0 3px #bf935c28;
+}
+.drawer[open] summary{transform:translateY(1px)}
+.specimen{
+  position:relative;
+  min-width:0;
+  display:grid;
+  grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr);
+  gap:clamp(13px,2.4vw,28px);
+  align-items:center;
+  padding:clamp(17px,3vw,30px);
+  background:var(--paper);
+  color:var(--ink);
+  box-shadow:inset 0 7px 12px #472e2222, inset 3px -3px #c5aa7c55;
+}
+.drawer[open] .specimen{animation:slide-tray .32s cubic-bezier(.16,.75,.29,1) both}
+@keyframes slide-tray{
+  from{transform:translateY(-12px);opacity:.35}
+  to{transform:translateY(0);opacity:1}
+}
+.specimen-visual{
+  margin:0;
+  aspect-ratio:1;
+  position:relative;
+  display:grid;
+  min-width:0;
+  place-items:center;
+  background:radial-gradient(ellipse at center,#dcc5a244,transparent 70%);
+}
+.specimen-visual img{display:block;width:100%;height:100%;max-height:220px;object-fit:contain}
+.specimen-note{min-width:0;overflow-wrap:anywhere}
+.specimen-note h2{font:normal clamp(24px,3vw,34px)/1 Georgia,serif;letter-spacing:-.045em}
+.specimen-note p{margin-top:9px;color:var(--muted);font-size:14px;line-height:1.5}
+.record-actions{
+  margin-top:14px;
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:5px 12px;
+}
+.keep{
+  min-height:44px;
+  min-width:44px;
+  padding:8px 13px;
+  border:1px solid #84291e;
+  background:#a32e23;
+  color:#fff8e8;
+  font-weight:750;
+  font-size:13px;
+}
+.keep:hover{background:#84291e}
+.keep[data-kept="true"]{
+  border-color:#235a52;
+  background:#e1eee0;
+  color:#1f5048;
+}
+.notes-link{
+  display:inline-flex;
+  min-height:44px;
+  align-items:center;
+  color:#166065;
+  font-size:13px;
+  font-weight:700;
+  text-underline-offset:3px;
+}
+.notes-link:focus-visible{outline:3px solid #166469;outline-offset:3px}
+@media(max-width:920px){
+  main{width:calc(100% - 68px);gap:45px}
+  .drawer-name{font-size:clamp(29px,5.5vw,48px)}
+}
+@media(max-width:710px){
+  main{
+    width:min(560px,calc(100% - 42px));
+    min-height:auto;
+    grid-template-columns:minmax(0,1fr);gap:29px;
+    padding:44px 0 56px;
+  }
+  .intro{padding:0}
+  h1{max-width:12ch;font-size:clamp(48px,11vw,72px)}
+  .lede{margin-top:16px}
+  .field-notes{margin-top:12px}
+  .drawer summary{min-height:83px}
+}
+@media(max-width:400px){
+  .specimen{
+    grid-template-columns:minmax(0,1fr);
+    padding:14px 15px 17px;
+    gap:8px;
+  }
+  .specimen-visual{aspect-ratio:auto;height:125px}
+  .specimen-visual img{max-height:125px}
+  .specimen-note p{margin-top:6px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<main>
+  <header class="intro">
+    <h1>The Weather Cabinet</h1>
+    <p class="lede">Open a drawer to see how one of three imagined instruments reads the weather.</p>
+    <details class="field-notes" id="notes">
+      <summary>Field notes <span id="note-count">(0)</span></summary>
+      <p id="notes-empty">Keep an instrument from a drawer to find it here.</p>
+      <ul id="note-list"></ul>
+    </details>
+  </header>
+  <section class="cabinet" aria-label="Weather cabinet drawers">
+    <details class="drawer" id="rain" name="weather">
+      <summary><span class="drawer-id" aria-hidden="true">01</span><span class="drawer-name">Rain</span><span class="handle" aria-hidden="true"></span></summary>
+      <article class="specimen">
+        <figure class="specimen-visual"><img src="%%ASSET:rain.webp%%" alt="A graduated glass tube with a flared mouth and a small brass foot."></figure>
+        <div class="specimen-note"><h2>Rain catcher</h2><p>Set the brass foot level before the first drops arrive. When the rain passes, read the waterline at eye level and empty the glass.</p><div class="record-actions"><button class="keep" type="button">Keep in field notes</button><a class="notes-link" href="#notes" hidden>View field notes</a></div></div>
+      </article>
+    </details>
+    <details class="drawer" id="wind" name="weather">
+      <summary><span class="drawer-id" aria-hidden="true">02</span><span class="drawer-name">Wind</span><span class="handle" aria-hidden="true"></span></summary>
+      <article class="specimen">
+        <figure class="specimen-visual"><img src="%%ASSET:wind.webp%%" alt="A small brass cup rotor attached to a walnut handle."></figure>
+        <div class="specimen-note"><h2>Pocket wind counter</h2><p>Hold the cups above your shoulder and count the turns for half a minute. Repeating the count from a sheltered spot shows how much a wall slows the air.</p><div class="record-actions"><button class="keep" type="button">Keep in field notes</button><a class="notes-link" href="#notes" hidden>View field notes</a></div></div>
+      </article>
+    </details>
+    <details class="drawer" id="sun" name="weather">
+      <summary><span class="drawer-id" aria-hidden="true">03</span><span class="drawer-name">Sun</span><span class="handle" aria-hidden="true"></span></summary>
+      <article class="specimen">
+        <figure class="specimen-visual"><img src="%%ASSET:sun.webp%%" alt="An open round bronze sundial with an upright triangular blade."></figure>
+        <div class="specimen-note"><h2>Folding sundial</h2><p>Raise the little brass blade and turn the case to face true north. Its shadow traces local solar time along the engraved ring.</p><div class="record-actions"><button class="keep" type="button">Keep in field notes</button><a class="notes-link" href="#notes" hidden>View field notes</a></div></div>
+      </article>
+    </details>
+  </section>
+  <span id="status" class="only-reader" role="status"></span>
+</main>
+<script>
+(() => {
+  const drawers = [...document.querySelectorAll('.drawer')];
+  const notes = document.querySelector('#notes');
+  const noteCount = document.querySelector('#note-count');
+  const noteList = document.querySelector('#note-list');
+  const empty = document.querySelector('#notes-empty');
+  const status = document.querySelector('#status');
+  const storedKey = 'specimen-cabinet-weather-kept-v1';
+  const valid = new Set(drawers.map(drawer => drawer.id));
+  let kept = new Set();
+  try {
+    const parsed = JSON.parse(localStorage.getItem(storedKey) || '[]');
+    if (Array.isArray(parsed)) kept = new Set(parsed.filter(id => valid.has(id)));
+  } catch { /* In-session controls stay available. */ }
+
+  function openDrawer(drawer) {
+    for (const other of drawers) {
+      if (other !== drawer) other.open = false;
+    }
+    drawer.open = true;
+    drawer.querySelector('summary').focus();
+  }
+
+  function showNotes() {
+    empty.hidden = kept.size > 0;
+    noteCount.textContent = '(' + kept.size + ')';
+    noteList.replaceChildren();
+    for (const drawer of drawers) {
+      const control = drawer.querySelector('.keep');
+      const isKept = kept.has(drawer.id);
+      const label = drawer.querySelector('h2').textContent;
+      control.dataset.kept = String(isKept);
+      control.textContent = isKept ? 'Remove from field notes' : 'Keep in field notes';
+      drawer.querySelector('.notes-link').hidden = !isKept;
+      if (!isKept) continue;
+      const item = document.createElement('li');
+      const link = document.createElement('button');
+      link.type = 'button';
+      link.textContent = label;
+      link.addEventListener('click', () => openDrawer(drawer));
+      item.append(link);
+      noteList.append(item);
+    }
+  }
+
+  for (const drawer of drawers) {
+    drawer.addEventListener('toggle', () => {
+      if (!drawer.open) return;
+      for (const other of drawers) {
+        if (other !== drawer) other.open = false;
+      }
+    });
+    const control = drawer.querySelector('.keep');
+    drawer.querySelector('.notes-link').addEventListener('click', event => {
+      event.preventDefault();
+      notes.open = true;
+      notes.querySelector('summary').focus({ preventScroll:true });
+      notes.scrollIntoView({ block:'nearest' });
+    });
+    control.addEventListener('click', () => {
+      const label = drawer.querySelector('h2').textContent;
+      const isKept = kept.has(drawer.id);
+      if (isKept) kept.delete(drawer.id);
+      else kept.add(drawer.id);
+      try { localStorage.setItem(storedKey, JSON.stringify([...kept])); } catch { /* In-session controls stay available. */ }
+      showNotes();
+      status.textContent = label + (isKept ? ' removed from field notes.' : ' kept in field notes.');
+    });
+  }
+  showNotes();
+})();
+</script>
+</body>
+</html>

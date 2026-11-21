@@ -1,0 +1,7 @@
+---
+layout: null
+permalink: /404.html
+---
+{% capture recovery %}{% include_relative weather/404.html %}{% endcapture %}
+{% capture link %}href="{{ site.github.baseurl | default: site.baseurl | escape }}/weather/{% endcapture %}
+{{ recovery | replace: 'href="./', link }}

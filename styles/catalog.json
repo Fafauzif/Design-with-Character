@@ -1,0 +1,65 @@
+[
+  {
+    "slug": "halftone-dossier",
+    "title": "Halftone Dossier",
+    "description": "Review the evidence in a printed case file about a stolen chair.",
+    "action": "Open case file",
+    "medium": "Risograph",
+    "palette": [
+      "#efe3cb",
+      "#37253f",
+      "#ae205b"
+    ],
+    "thumbnail": "cover.webp"
+  },
+  {
+    "slug": "botanical-letterpress",
+    "title": "Botanical Letterpress",
+    "description": "Open a folded folio and read the note that came with a pressed cosmos.",
+    "action": "Open the folio",
+    "medium": "Pressed botanical",
+    "palette": [
+      "#263a30",
+      "#f7ebcd",
+      "#26339d"
+    ],
+    "thumbnail": "cover.webp"
+  },
+  {
+    "slug": "specimen-cabinet",
+    "title": "Specimen Cabinet",
+    "description": "Open a weather cabinet and save unusual instruments to your field notes.",
+    "action": "Open a drawer",
+    "medium": "Natural history cabinet",
+    "palette": [
+      "#38262c",
+      "#e9dfc9",
+      "#bd9e66"
+    ]
+  },
+  {
+    "slug": "arcade-workshop",
+    "title": "Arcade Workshop",
+    "description": "Play the Pulse machine and arrange an eight-step drum loop.",
+    "action": "Play the drum machine",
+    "medium": "Instrument hardware",
+    "palette": [
+      "#272426",
+      "#db5b35",
+      "#eee2bc"
+    ]
+  },
+  {
+    "slug": "pixel-study-room",
+    "title": "Pixel Study Room",
+    "description": "Start a focus session in a moonlit study with Mallow, a lilac cat.",
+    "action": "Start focus",
+    "medium": "Pixel art",
+    "palette": [
+      "#241c2e",
+      "#b184bd",
+      "#f8bb87"
+    ],
+    "thumbnail": "cover.webp"
+  }
+]

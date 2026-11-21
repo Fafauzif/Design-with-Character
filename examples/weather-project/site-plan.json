@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "audience": "A curious visitor exploring a fictional collection, including a returning visitor with a saved observation.",
+  "primary_task": "Find an instrument and keep a personal observation about it.",
+  "subject_detail": "When you put two instruments beside one another, the differences in their mechanisms become easier to see.",
+  "shared": [
+    "Instrument names and images match across browsing, comparison and notes.",
+    "Collection, comparison and field notes remain recognizable routes.",
+    "A visitor can open an instrument from a deep link."
+  ],
+  "routes": [
+    {
+      "id": "entrance",
+      "job": "Recognize a collection of invented weather instruments and enter it.",
+      "composition": "A full-width cabinet shop window with the instruments arranged together.",
+      "action": "Enter the collection or take a task shortcut.",
+      "return_path": "A visible route to the instrument collection.",
+      "states": [
+        "first visit",
+        "return via navigation"
+      ],
+      "examples": [
+        "index.html"
+      ]
+    },
+    {
+      "id": "collection",
+      "job": "Find a particular instrument by its name or family.",
+      "composition": "A searchable inventory; compare names and objects before choosing.",
+      "action": "Filter instruments and open a matching object.",
+      "return_path": "Reset a filter; follow the link to an instrument or use site navigation.",
+      "states": [
+        "unfiltered",
+        "matching search",
+        "no matching instruments",
+        "cleared"
+      ],
+      "examples": [
+        "collection.html",
+        "collection.html?q=wind"
+      ]
+    },
+    {
+      "id": "object",
+      "job": "See an instrument closely enough to understand its fictional purpose.",
+      "composition": "One instrument plate and the observation that goes with it.",
+      "action": "Write and save an observation about this object.",
+      "return_path": "Use collection navigation, comparison or saved notes.",
+      "states": [
+        "direct arrival",
+        "note entered",
+        "saved"
+      ],
+      "examples": [
+        "objects/rain-catcher.html",
+        "objects/pocket-wind-counter.html",
+        "objects/folding-sundial.html",
+        "objects/dew-mirror.html",
+        "objects/cloud-window.html",
+        "objects/frost-comb.html"
+      ]
+    },
+    {
+      "id": "comparison",
+      "job": "Compare the same qualities of two instruments in one place.",
+      "composition": "Two instrument positions on one comparison surface.",
+      "action": "Choose each instrument and see both descriptions update.",
+      "return_path": "Change either selection or return to the collection.",
+      "states": [
+        "default pair",
+        "pair chosen",
+        "pair opened by direct URL"
+      ],
+      "examples": [
+        "compare.html",
+        "compare.html?a=rain-catcher&b=folding-sundial"
+      ]
+    },
+    {
+      "id": "notes",
+      "job": "Retrieve or change a previously saved observation.",
+      "composition": "A writing and retrieval surface organized around the visitor’s own records.",
+      "action": "Edit, remove or back up an observation.",
+      "return_path": "Reopen an instrument or use the collection to find the first one.",
+      "states": [
+        "empty",
+        "populated",
+        "edited",
+        "exported",
+        "invalid import"
+      ],
+      "examples": [
+        "notes.html"
+      ]
+    },
+    {
+      "id": "recovery",
+      "job": "Locate a route back to the collection from a missing object.",
+      "composition": "A short directional message with a visible exit.",
+      "action": "Find the collection.",
+      "return_path": "Go directly to a known working destination.",
+      "states": [
+        "missing item",
+        "back in collection"
+      ],
+      "examples": [
+        "404.html"
+      ]
+    }
+  ],
+  "journeys": [
+    {
+      "goal": "First visit with a question",
+      "through": [
+        "entrance",
+        "collection",
+        "object",
+        "notes"
+      ],
+      "success": "A note written against the chosen object is available in the visitor’s field notes."
+    },
+    {
+      "goal": "Compare two objects from a direct link",
+      "through": [
+        "comparison",
+        "collection"
+      ],
+      "success": "Two distinct instruments are visible and the visitor can get back to the inventory."
+    },
+    {
+      "goal": "Return to an observation",
+      "through": [
+        "notes",
+        "object"
+      ],
+      "success": "The visitor can identify and revisit the instrument their note describes."
+    },
+    {
+      "goal": "Recover after finding nothing",
+      "through": [
+        "collection",
+        "collection",
+        "object"
+      ],
+      "success": "A search with zero matches can be cleared and a real instrument opened."
+    },
+    {
+      "goal": "Arrive at the missing-page view",
+      "through": [
+        "recovery",
+        "collection"
+      ],
+      "success": "The collection opens without replaying an entrance."
+    }
+  ]
+}

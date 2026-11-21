@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "journeys": [
+    {
+      "name": "Recover from an empty search and open a rain catcher",
+      "start": "collection.html",
+      "steps": [
+        {"fill": ["#search", "a specimen which does not exist"]},
+        {"visible": "#empty"},
+        {"press": ["#clear-search", "Enter"]},
+        {"hidden": "#empty"},
+        {"press": [".index-entry[href='objects/rain-catcher.html']", "Enter"]},
+        {"text": ["h1", "Rain catcher"]}
+      ]
+    },
+    {
+      "name": "Record a field observation and find it in the notebook",
+      "start": "objects/dew-mirror.html",
+      "steps": [
+        {"fill": ["#observation", "One drop rested on the rim."]},
+        {"press": ["#note-form button[type=submit]", "Enter"]},
+        {"click": "#write-note a[href='../notes.html']"},
+        {"text": ["#entries .observation", "One drop rested on the rim."]}
+      ]
+    }
+  ]
+}

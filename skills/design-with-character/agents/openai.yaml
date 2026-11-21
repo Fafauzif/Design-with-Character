@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design With Character"
+  short_description: "Design distinctive web interfaces around a real action"
+  default_prompt: "Use $design-with-character to choose a style and redesign this site around its main interaction."

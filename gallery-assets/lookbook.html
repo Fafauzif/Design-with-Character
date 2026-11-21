@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design With Character · Visual preview</title>
+<meta name="theme-color" content="#202367">
+<style>
+*{box-sizing:border-box}
+:root{--wall:#202367;--ink:#f8f4ff;--sub:#d4d3eb;--light:#ffe37c;--deep:#15174a;color-scheme:dark;background:var(--wall);color:var(--ink);font:16px/1.45 Arial,Helvetica,sans-serif}
+body{margin:0}
+.shell{max-width:1350px;margin:auto;padding:clamp(1rem,3vw,2.8rem) clamp(1rem,3.3vw,3.3rem) clamp(2rem,5vw,4.5rem)}
+header{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:clamp(1.2rem,2.5vw,2.2rem)}
+h1{font:700 clamp(2rem,4.9vw,5.4rem)/.95 Arial,Helvetica,sans-serif;letter-spacing:-.078em;margin:0}
+h1 em{color:var(--light);font:italic 400 1.12em/.9 Georgia,serif;letter-spacing:-.085em}
+header p{font-size:.94rem;max-width:39ch;color:var(--sub);margin:0}
+header code{font:inherit;color:var(--ink)}
+#controls{display:none}
+.ready #controls{display:flex;align-items:end;flex-wrap:wrap;gap:1rem 1.6rem;margin-bottom:1.1rem}
+label,legend{color:var(--sub);font-size:.81rem;display:block;margin:0 0 .3rem}
+select,button{font:inherit}
+select{max-width:100%;padding:.4rem .45rem;color:var(--ink);background:#25296e;border:1px solid #868abd;min-height:42px;font-weight:600}
+select option{background:#25296e;color:var(--ink)}
+button{border:0;cursor:pointer;min-height:42px;background:transparent;color:var(--sub);padding:.42rem .7rem}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+fieldset>div{display:flex;gap:.15rem}
+button[aria-pressed=true]{background:var(--light);color:var(--deep);font-weight:700}
+#size{margin-left:auto;padding:.42rem .3rem;color:var(--ink);text-decoration:underline;text-underline-offset:.24em}
+.actual #size{color:var(--light);background:transparent}
+#readout{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(100%);white-space:nowrap}
+:focus-visible{outline:3px solid var(--light);outline-offset:4px}
+[hidden]{display:none!important}
+h2,h3{font-family:Georgia,serif}
+.ready h2,.ready h3{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(100%);white-space:nowrap}
+figure{margin:0}
+.surface{max-width:100%;overflow:auto;scrollbar-color:#9396b8 var(--deep);text-align:center;background:var(--deep)}
+.capture{display:block;height:auto;max-width:100%;margin:auto}
+.capture[data-device=desktop]{width:1200px}
+.capture[data-device=phone]{width:390px}
+.actual .capture{max-width:none}
+.surface:focus-visible{outline-offset:-4px}
+figcaption{color:var(--sub);line-height:1.4;font-size:.99rem;margin-top:.7rem}
+.scene{margin:0 0 2rem}
+@media(max-width:780px){
+ header{display:block}
+ header p{font-size:.9rem;max-width:56ch;margin-top:.65rem}
+ .ready #controls{gap:.75rem 1rem}
+ #size{margin:0}
+}
+@media(max-width:480px){
+ .shell{padding:1rem .85rem 1.6rem}
+ h1{font-size:clamp(1.9rem,8.4vw,2.8rem)}
+ .ready #controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:end;gap:.7rem .65rem}
+ #controls>div{grid-column:1/-1;display:grid;grid-template-columns:5.3rem minmax(0,1fr);align-items:center;gap:.45rem}
+ #controls>div label{margin:0}
+ select{width:100%;font-size:.92rem}
+ button{padding:.3rem .4rem;font-size:.9rem}
+ #size{justify-self:end}
+ figcaption{font-size:.91rem}
+}
+@media(forced-colors:active){button[aria-pressed=true]{outline:2px solid Highlight}}
+</style>
+</head>
+<body><div class="shell">
+<header><h1>Design With <em>Character</em></h1><p>Browse captures of the working sites. Open <code>index.html</code> in the ZIP to try the controls shown.</p></header>
+<div id="controls" aria-label="Preview controls" role="group">
+<div><label for="experience">Experience</label><select id="experience"></select></div>
+<div><label for="scene">Scene</label><select id="scene"></select></div>
+<fieldset><legend>Viewport</legend><div><button type="button" data-format="desktop" aria-pressed="true">Desktop</button><button type="button" data-format="phone" aria-pressed="false">Phone</button></div></fieldset>
+<button type="button" id="size">View at actual size</button>
+</div>
+<p id="readout" role="status"></p>
+<main>%%EXPERIENCES%%</main></div>
+<script>
+(() => {
+  const articles = [...document.querySelectorAll('article.experience')];
+  const experience = document.getElementById('experience');
+  const scene = document.getElementById('scene');
+  const buttons = [...document.querySelectorAll('button[data-format]')];
+  const size = document.getElementById('size');
+  const readout = document.getElementById('readout');
+  const initialFormat = matchMedia('(max-width: 650px)').matches ? 'phone' : 'desktop';
+  let current;
+
+  for (const article of articles) experience.add(new Option(article.dataset.name, article.id));
+  function draw(id, key, format) {
+    const active = articles.find(article => article.id === id) || articles[0];
+    const scenes = [...active.querySelectorAll('.scene')];
+    const selected = scenes.find(section => section.dataset.key === key) || scenes[0];
+    const device = ['phone','desktop'].includes(format) ? format : initialFormat;
+    if (!current || current.article !== active) {
+      scene.replaceChildren();
+      for (const item of scenes) scene.add(new Option(item.dataset.name, item.dataset.key));
+    }
+    current = {article:active, section:selected, device};
+    articles.forEach(article => {article.hidden = article !== active});
+    scenes.forEach(section => {section.hidden = section !== selected});
+    selected.querySelectorAll('img').forEach(img => {img.hidden = img.dataset.device !== device});
+    experience.value = active.id;
+    scene.value = selected.dataset.key;
+    buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.format === device)));
+    const surface = selected.querySelector('.surface');
+    surface.scrollLeft = 0;
+    const needsZoom = surface.clientWidth < (device === 'phone' ? 390 : 1200);
+    size.hidden = !needsZoom;
+    size.textContent = document.documentElement.classList.contains('actual') ? 'Fit to width' : 'View at actual size';
+    const scrollable = document.documentElement.classList.contains('actual') && needsZoom;
+    if (scrollable) {
+      surface.setAttribute('tabindex','0');
+      surface.setAttribute('role','region');
+      surface.setAttribute('aria-label','Full-size capture. Scroll horizontally to inspect.');
+    } else {
+      surface.removeAttribute('tabindex');surface.removeAttribute('role');surface.removeAttribute('aria-label');
+    }
+    readout.textContent = [active.dataset.name, selected.dataset.name, device].join(', ');
+  }
+  function go(id,key,format) {
+    draw(id,key,format);
+    const hash = '#' + [current.article.id, current.section.dataset.key, current.device].join('/');
+    if (location.hash !== hash) history.pushState(null,'',hash);
+  }
+  function restore() { draw(...location.hash.slice(1).split('/')); }
+  experience.addEventListener('change', () => go(experience.value, '', current.device));
+  scene.addEventListener('change', () => go(experience.value, scene.value, current.device));
+  buttons.forEach(button => button.addEventListener('click', () => go(experience.value,scene.value,button.dataset.format)));
+  size.addEventListener('click', () => {
+    document.documentElement.classList.toggle('actual');
+    draw(experience.value,scene.value,current.device);
+  });
+  window.addEventListener('resize', () => draw(current.article.id, current.section.dataset.key, current.device));
+  window.addEventListener('hashchange',restore);
+  window.addEventListener('popstate',restore);
+  document.documentElement.classList.add('ready');
+  restore();
+})();
+</script></body></html>

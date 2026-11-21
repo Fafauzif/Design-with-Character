@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2b3426">
+  <title>A flower from Tuesday</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --moss: #2b3426;
+      --dry-leaf: #394432;
+      --paper: #f0e4bd;
+      --pale: #fff8df;
+      --ink: #261f13;
+      --blue: #293ba6;
+      --display: Baskerville, "Times New Roman", "Liberation Serif", serif;
+      color: var(--paper);
+      background: var(--moss);
+      font: 16px/1.5 system-ui, sans-serif;
+    }
+
+    body, h1, h2, p { margin: 0; }
+
+    body {
+      min-width: 0;
+      min-height: 100svh;
+      background: radial-gradient(ellipse at 67% 39%, var(--dry-leaf), var(--moss) 67%);
+    }
+
+    [hidden] { display: none !important; }
+
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 3px solid #fbdf91; outline-offset: 5px; }
+
+    .layout {
+      position: relative;
+      isolation: isolate;
+      width: min(100%, 1450px);
+      min-height: 100svh;
+      margin: auto;
+      display: grid;
+      grid-template-columns: minmax(0, .78fr) minmax(0, 1.1fr);
+      align-items: center;
+      gap: clamp(1.35rem, 5vw, 5rem);
+      padding: clamp(2.5rem, 8vw, 7.5rem) clamp(1.2rem, 6.5vw, 6.35rem);
+      overflow: clip;
+    }
+
+    .intro { position: relative; z-index: 3; padding-bottom: clamp(2rem, 7vw, 5.5rem); }
+    h1 {
+      font: 400 clamp(3.25rem, 6.95vw, 7.2rem)/.88 var(--display);
+      letter-spacing: -.075em;
+      margin-left: -.055em;
+      text-wrap: balance;
+    }
+    h1 em { display: block; font-weight: 400; }
+    .intro p {
+      margin: clamp(1.25rem, 3vw, 2.2rem) 0 0;
+      max-width: 28ch;
+      font-size: clamp(1rem, 1.8vw, 1.18rem);
+    }
+
+    .folio-toggle {
+      position: absolute;
+      z-index: 4;
+      bottom: 19%;
+      left: 1%;
+      border: 0;
+      border-radius: 0;
+      cursor: pointer;
+      min-height: 52px;
+      padding: .8rem 1.15rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .8rem;
+      color: var(--pale);
+      background: var(--blue);
+      font: 600 .98rem/1.2 system-ui, sans-serif;
+      box-shadow: 3px 3px #111742;
+      rotate: -7deg;
+      transition: translate .18s ease, box-shadow .18s ease;
+    }
+    .folio-toggle:hover { background: #3549bb; }
+    .folio-toggle:active { box-shadow: none; translate: 2px 2px; }
+    .folio-toggle::after { content: ""; width: .62rem; height: .62rem; border-top: 2px solid; border-right: 2px solid; transform: rotate(45deg); }
+    .folio-toggle[aria-expanded="true"] {
+      position: relative;
+      align-self: start;
+      justify-self: start;
+      bottom: auto;
+      left: auto;
+      margin: -.55rem 0 .1rem calc(16% + 1.25rem);
+      rotate: 2deg;
+    }
+    .folio-toggle[aria-expanded="true"]::after { transform: rotate(-135deg); }
+
+    .folio {
+      position: relative;
+      display: grid;
+      align-items: center;
+      min-width: 0;
+      min-height: min(45vw, 550px);
+      margin-right: .2rem;
+      isolation: isolate;
+    }
+
+    .mount {
+      position: absolute;
+      z-index: 1;
+      inset: 10% 5% 5% 3%;
+      transform: rotate(-7deg);
+      transform-origin: 54% 53%;
+      background: #dac790;
+      box-shadow: .25rem .85rem 2rem #1016099c;
+      transition: transform .6s cubic-bezier(.22,.8,.26,1);
+    }
+    .mount::before {
+      position: absolute;
+      content: "";
+      inset: -.9% .55% .85% -.8%;
+      background: radial-gradient(ellipse at 45% 30%, #f6eccb 10%, var(--paper) 75%);
+      clip-path: polygon(0 .25%, 100% 0, 99.75% 100%, 0 99.8%);
+      box-shadow: inset 0 0 2.7rem #a8884b35;
+    }
+    .label {
+      position: absolute;
+      top: 8%;
+      right: 6%;
+      padding: .15rem .45rem .21rem;
+      color: #432c23;
+      background: #f7ebc5;
+      box-shadow: .06rem .08rem #bca47857;
+      font: italic clamp(1.08rem, 2.5vw, 1.78rem)/1 var(--display);
+    }
+    .specimen {
+      position: absolute;
+      z-index: 2;
+      left: -11%;
+      top: 5%;
+      width: 113%;
+      height: 89%;
+      object-fit: contain;
+      filter: drop-shadow(.13rem .3rem .23rem #26180d65);
+      transform: rotate(13deg) translate(0, -5%);
+      transition: transform .6s cubic-bezier(.22,.8,.26,1);
+      pointer-events: none;
+    }
+    .folio[data-open="true"] { align-content: center; }
+    .folio[data-open="true"] .mount { transform: translate(-7%, 1%) rotate(-14deg) scale(.9); }
+    .folio[data-open="true"] .specimen { transform: translate(-4%, -13%) rotate(-4deg) scale(.97); }
+
+    .note {
+      position: relative;
+      z-index: 3;
+      margin: 12% 0 0 16%;
+      padding: clamp(1.35rem, 3.5vw, 3.2rem);
+      color: var(--ink);
+      background: #f5e9c8;
+      box-shadow: .8rem 1rem 2.2rem #181909a6;
+      transform-origin: left center;
+      transform: rotate(2deg);
+      animation: open-note .53s cubic-bezier(.23,.8,.27,1) both;
+    }
+    .note h2 {
+      width: fit-content;
+      margin: 0 0 .8rem;
+      font: 400 clamp(2rem, 4.2vw, 3.75rem)/.98 var(--display);
+      letter-spacing: -.055em;
+    }
+    .note h2:focus { outline: none; }
+    .note p { max-width: 38ch; font: clamp(1.1rem, 2.05vw, 1.42rem)/1.38 var(--display); }
+    .note p + p { margin-top: .8rem; }
+
+    @keyframes open-note {
+      from { opacity: 0; transform: perspective(900px) rotateY(44deg) rotate(-9deg) translateX(-3%); }
+      to { opacity: 1; transform: perspective(900px) rotateY(0deg) rotate(2deg); }
+    }
+
+    @media (max-width: 940px) {
+      .layout { padding-inline: clamp(1.4rem, 5.3vw, 3.5rem); }
+      .folio { min-height: min(50vw, 470px); }
+      .intro { padding-bottom: 1.5rem; }
+    }
+
+    @media (max-width: 660px) {
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+        align-content: start;
+        gap: 1.65rem;
+        padding: clamp(3.2rem, 9svh, 5.5rem) clamp(1.3rem, 6.4vw, 2.65rem) 2.25rem;
+      }
+      .intro { padding-bottom: 0; }
+      h1 { font-size: clamp(3.3rem, 12vw, 5.7rem); text-wrap: pretty; }
+      .intro p { margin: 1.1rem 0 0; }
+      .folio-toggle { min-height: 48px; bottom: 12%; left: 4%; }
+      .folio-toggle[aria-expanded="true"] { margin-left: calc(7% + .8rem); }
+      .folio { min-height: min(65vw, 355px); }
+      .mount { inset: 4% 6% 4% 5%; }
+      .specimen { left: -2%; top: -3%; width: 108%; height: 103%; transform: rotate(10deg); }
+      .note { margin: 10% 1% 0 7%; }
+      .folio[data-open="true"] .specimen { transform: translate(-6%, -12%) rotate(-4deg) scale(.97); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="layout">
+    <section class="intro" aria-labelledby="title">
+      <h1 id="title">A flower from <em>Tuesday.</em></h1>
+      <p>Picked on the walk home, with rain still caught in the petals.</p>
+    </section>
+
+    <section class="folio" id="folio" aria-label="Pressed cosmos folio">
+      <div class="mount" aria-hidden="true"><span class="label">Cosmos</span></div>
+      <img class="specimen" src="%%ASSET:art.webp%%" alt="Two ivory cosmos blossoms, pressed with their stems and leaves" width="760" height="507">
+      <article class="note" id="field-note" aria-labelledby="note-heading" hidden>
+        <h2 id="note-heading" tabindex="-1">Field note</h2>
+        <p>By the time I reached the gate, the rain had stopped. One stem was leaning through the fence, low enough to brush my sleeve.</p>
+        <p>I carried it home between the pages of the book I’d brought for the bus.</p>
+      </article>
+      <button type="button" class="folio-toggle" id="folio-toggle" aria-controls="field-note" aria-expanded="false">Open the folio</button>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+      const toggle = document.getElementById("folio-toggle");
+      const folio = document.getElementById("folio");
+      const note = document.getElementById("field-note");
+      const noteHeading = document.getElementById("note-heading");
+
+      function setOpen(open) {
+        folio.dataset.open = String(open);
+        note.hidden = !open;
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.textContent = open ? "Close the folio" : "Open the folio";
+        if (open) noteHeading.focus();
+        else toggle.focus();
+      }
+
+      toggle.addEventListener("click", () => setOpen(note.hidden));
+      folio.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !note.hidden) setOpen(false);
+      });
+    })();
+  </script>
+</body>
+</html>

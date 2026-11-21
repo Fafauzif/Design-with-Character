@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field notes · Weather Cabinet</title><link rel="stylesheet" href="assets/cabinet.css">
+<script defer src="assets/catalogue.js"></script><script defer src="assets/cabinet.js"></script></head>
+<body data-page="notes" data-base="" >
+<a class="skip" href="#main">Skip to content</a>
+<header class="mast"><a class="brand" href="index.html" aria-label="Weather Cabinet entrance"><span class="mark" aria-hidden="true">W</span> Weather Cabinet</a>
+<nav aria-label="Cabinet"><a href="collection.html">Collection</a><a href="compare.html">Compare</a><a href="notes.html" aria-current="page">Field notes</a></nav></header>
+<main id="main"><section class="notebook wrap"><div class="ledger-gutter" aria-hidden="true"></div><div class="notebook-inner">
+    <div class="notebook-head"><h1>Field notes</h1><p id="notes-count" role="status">Your observations</p></div>
+    <p class="storage-info" id="storage-info" hidden></p><div id="entries"></div>
+    <div id="blank"><h2>A fresh page</h2><p>Start at an instrument. Its field-note prompt gives you a place to record what caught your eye.</p><a class="action" href="collection.html">Choose an instrument <span aria-hidden="true">→</span></a></div>
+    <p role="status" id="notes-status"></p><button id="undo" hidden>Undo removal</button>
+    <details class="backup"><summary>Back up or restore notes</summary><p>Download a copy for another device. Restoring adds any missing instruments’ notes and keeps entries already here. Each instrument has one editable note.</p>
+    <div class="backup-actions"><button type="button" id="export">Export notes</button><label for="import-file">Import notes <input type="file" id="import-file" accept=".json,application/json"></label></div></details>
+    <noscript><p>This notebook requires JavaScript to read and save entries.</p></noscript></div></section></main>
+
+</body></html>
